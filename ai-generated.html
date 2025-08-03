@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Generated Snake Game</title>
+</head>
+<body>
+    <header class="mainHeader" style="background-color: #333; padding: 20px; color: white; text-align: center;">
+        <section id="name">
+            <h1>Adeeb Momin</h1>
+        </section>
+        <section class="toggleBar">
+            <nav class="navbar">
+                <ul class="navbarOptions" style="list-style-type: none; padding: 0; margin: 0;">
+                    <li style="display: inline; margin-right: 15px;"><a href="index.html" style="color: white; text-decoration: none;">Home</a></li>
+                    <li style="display: inline; margin-right: 15px;"><a href="portfolio.html" style="color: white; text-decoration: none;">Projects</a></li>
+                    <li style="display: inline; margin-right: 15px;"><a href="qualifications.html" style="color: white; text-decoration: none;">Qualifications</a></li>
+                    <li style="display: inline; margin-right: 15px;"><a href="services.html" style="color: white; text-decoration: none;">Services</a></li>
+                    <li style="display: inline; margin-right: 15px;"><a href="ai-generated.html" class="currentPage" style="color: #ff6347; text-decoration: none;">AI Generate</a></li>
+                </ul>
+            </nav>
+        </section>
+    </header>
+    
+    <main class="game-container" style="text-align: center; margin-top: 50px;">
+        <h2>Snake Game</h2>
+        <canvas id="gameCanvas" width="400" height="400" style="background-color: #000; border: 3px solid #ccc; display: block; margin: 20px auto;"></canvas>
+        <p>Use W, A, S, D keys to control the snake. Try to eat the food and grow your snake!</p>
+        <p>Score: <span id="score">0</span></p>
+        <button id="restartButton" style="padding: 10px 20px; margin-top: 20px;">Restart Game</button>
+    </main>
+
+    <!-- New Text Box Section -->
+    <footer style="margin-top: 50px; padding: 20px; background-color: #f4f4f4;">
+        <textarea id="requestText" rows="10" cols="60" readonly style="width: 80%; padding: 10px; border: 2px solid #ccc; font-family: Arial, sans-serif; font-size: 14px;">
+1. Make an AI page for my website using only html, css, and js. Make this page as creative as you want, maybe make a game of snake
+2. is there any way to not make a new snake.js file
+3. using inline css if you need to, can you make the outline for the boxes easier to see. it is hard to see border
+4. can you also implement a restart button that resets the game. Currently, I have to refresh the page
+5. instead of arrow keys, can we use WASD to move because arrow keys cause website to move up and down
+6. Looks great! Lastly, can you make a text box at the bottom of the page with the following text:
+        </textarea>
+    </footer>
+
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+
+        const box = 20;
+        let snake;
+        let direction;
+        let food;
+        let score;
+        let game;
+
+        // Function to initialize/reset the game state
+        function initGame() {
+            snake = [{ x: 9 * box, y: 9 * box }];
+            direction = null;
+            food = {
+                x: Math.floor(Math.random() * 19 + 1) * box,
+                y: Math.floor(Math.random() * 19 + 1) * box
+            };
+            score = 0;
+            document.getElementById('score').innerText = score;
+
+            if (game) {
+                clearInterval(game);
+            }
+            game = setInterval(drawGame, 100);
+        }
+
+        // Control the snake with WASD keys
+        document.addEventListener('keydown', event => {
+            if (event.key === 'a' && direction !== 'RIGHT') {
+                direction = 'LEFT';
+            } else if (event.key === 'w' && direction !== 'DOWN') {
+                direction = 'UP';
+            } else if (event.key === 'd' && direction !== 'LEFT') {
+                direction = 'RIGHT';
+            } else if (event.key === 's' && direction !== 'UP') {
+                direction = 'DOWN';
+            }
+        });
+
+        // Restart button functionality
+        document.getElementById('restartButton').addEventListener('click', initGame);
+
+        function drawGame() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Draw snake
+            for (let i = 0; i < snake.length; i++) {
+                ctx.fillStyle = i === 0 ? 'green' : 'lightgreen';
+                ctx.fillRect(snake[i].x, snake[i].y, box, box);
+                ctx.strokeStyle = 'white'; // Border for snake blocks
+                ctx.lineWidth = 2;
+                ctx.strokeRect(snake[i].x, snake[i].y, box, box);
+            }
+
+            // Draw food
+            ctx.fillStyle = 'red';
+            ctx.fillRect(food.x, food.y, box, box);
+            ctx.strokeStyle = 'white'; // Border for food block
+            ctx.lineWidth = 2;
+            ctx.strokeRect(food.x, food.y, box, box);
+
+            // Snake head position
+            let snakeX = snake[0].x;
+            let snakeY = snake[0].y;
+
+            // Move snake based on direction
+            if (direction === 'LEFT') snakeX -= box;
+            if (direction === 'UP') snakeY -= box;
+            if (direction === 'RIGHT') snakeX += box;
+            if (direction === 'DOWN') snakeY += box;
+
+            // Check if snake eats food
+            if (snakeX === food.x && snakeY === food.y) {
+                score++;
+                document.getElementById('score').innerText = score;
+                food = {
+                    x: Math.floor(Math.random() * 19 + 1) * box,
+                    y: Math.floor(Math.random() * 19 + 1) * box
+                };
+            } else {
+                snake.pop();
+            }
+
+            // Add new head
+            const newHead = { x: snakeX, y: snakeY };
+
+            // Game over conditions
+            if (snakeX < 0 || snakeY < 0 || snakeX >= canvas.width || snakeY >= canvas.height || collision(newHead, snake)) {
+                clearInterval(game);
+                alert('Game Over! Your final score is: ' + score);
+            }
+
+            snake.unshift(newHead);
+        }
+
+        function collision(head, snakeArray) {
+            for (let i = 1; i < snakeArray.length; i++) {
+                if (head.x === snakeArray[i].x && head.y === snakeArray[i].y) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        // Start the game on page load
+        initGame();
+    </script>
+</body>
+</html>

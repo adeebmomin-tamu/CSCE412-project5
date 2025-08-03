@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio</title>
+    <link id="styles" rel="stylesheet" href="style1.css">
+
+</head>
+<body>
+    <header class="mainHeader">
+
+        <section id="name">
+            <h1>Adeeb Momin</h1>
+        </section>
+
+        <button id="switch" onclick="changeStyle()">Change Style</button>
+
+        <section class="toggleBar">
+            <nav class="navbar">
+                <ul class="navbarOptions">
+                    <!-- <li><button id="switch" onclick="changeStyle()">Change Style</button></li> -->
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="portfolio.html" class="currentPage">Projects</a></li>
+                    <li><a href="qualifications.html">Qualifications</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="ai-generated.html">AI Generate</a></li>
+                </ul>
+            </nav>
+        </section>
+
+    </header>
+    <div class="mainContent">
+
+        <div class="mainText">
+            <h2><a href="https://github.com/adeebmomin/TICbot" target="_blank">TIC Chatbot</a></h2>
+            <p>
+                This project was developed as a result of my machine learning research. In my research, we fine tuned a model based off of <a href="https://gemini.google.com/" target="_blank">Google Gemini</a> with
+                lectures provided by the supervising professor. These lectures focused on industry control, with things like programmable logic controllers
+                and IO relays. Using this data, we fine tuned the model by providing Gemini data through Google AI Studio. From there, we created the frontend
+                for a chatbot that would be used in classrooms for further testing. Using <a href="https://react.dev/">React</a>, CSS, JavaScript, <a href="https://nodejs.org/en">Node.js</a>, and Python, we were able to develop
+                the whole chatbot with responsive web design and quick responses. Firebase was utilized as well to store data entries and chat logs, along with user information. 
+                This project was a great learning experience, as I was able to get hands on experience using API calls, developing using React,
+                working with fine tuning data, and even creating my own chatbot. This project is still being worked on as there are many aspects that can still be
+                improved, like making the fine tuned model faster than it currently is.
+ 
+            </p>
+        </div>
+
+        <div class="headshot">
+            <img src="images/TICbot.png"> 
+            <!-- Created by me -->
+        </div>
+        
+    </div>
+    <div class="mainContent">
+
+        <div class="mainText">
+            <h2>Satisfaction Scanner</h2>
+            <p>
+                This project was developed during the TAMU <a href="https://howdyhack-2023.devpost.com/project-gallery?page=3" target="_blank">HowdyHack</a> 
+                hackathon is September 2023. In just 24 hours, my team and I were able to
+                create Satisfaction Scanner using Python for backend, <a href="https://pypi.org/project/PyQt5/#:~:text=PyQt5%20%2D%20Comprehensive%20Python%20Bindings%20for%20Qt%20v5&text=PyQt5%20is%20a%20comprehensive%20set,platforms%20including%20iOS%20and%20Android.">PyQT5</a> 
+                for frontend, Pandas for data management, and <a href="https://opencv.org/">OpenCV</a> for the facial
+                recognition software. The project utilizes OpenCV to scan and detect human emotions. From there, it categorizes them into specific
+                emotions, like satisfied, unsatisfied, and sad. From there, this data was stored in an excel file and sent to PowerBI for data 
+                visualization. For the frontend, we utilized PyQT5 as we were still novices at frontend development.
+                This project was a valuable learning experience for me, as collaborating with 2 others gave me experience coding within a group.
+                Using Git was one aspect that I really took away from this hackathon. 
+            </p>
+        </div>
+
+        <div class="headshot">
+            <img src="images/faceScanner.jpg"> 
+            <!-- https://www.vecteezy.com/free-vector/face-scan -->
+        </div>
+        
+    </div>
+
+    <script src="backend.js"></script>
+</body>
+</html>
